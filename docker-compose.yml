@@ -18,13 +18,11 @@ services:
     build: ./src
     ports:
       - "80:8080"
-    volumes:
-      - ./src/app:/usr/local/tomcat/webapps/app
     depends_on:
       - database
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: testdb1
-      MYSQL_USER: testuser
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password123
+      MYSQL_ROOT_PASSWORD: rootPassword123
