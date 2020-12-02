@@ -6,7 +6,6 @@
 
 package com.code;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HaoPhan
  */
-@WebServlet("/addingSession")
+@WebServlet(urlPatterns = {"/addingSession"})
 public class AddingSession extends HttpServlet {
 
     private final faccade_main fb = new faccade_main();

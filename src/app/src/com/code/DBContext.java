@@ -9,11 +9,11 @@ import java.sql.SQLException;
 
 public class DBContext {
 
-    private final String severName = "localhost";
+    private final String severName = "127.0.0.1";
     private final String dbName = "sqldatabase";
     private final String portNumber = "3306";
-    private final String userID = "admin";
-    private final String password = "2020";
+    private final String userID = "root";
+    private final String password = "18091996";
     private Connection connection;
     private ResultSet rs;
     private Statement statement;

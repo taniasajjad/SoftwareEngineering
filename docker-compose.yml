@@ -19,7 +19,7 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ./src/app:/usr/local/tomcat/webapps/bostoncc:ro
+      - ./src/app:/usr/local/tomcat/webapps/app
     depends_on:
       - database
     restart: always

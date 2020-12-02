@@ -1,5 +1,6 @@
 package com.code;
 
+import object.SessionInfor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -10,7 +11,6 @@ import object.Room;
 import object.Session;
 import object.Speaker;
 import object.TimeSlot;
-import object.SessionInfor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.json.JSONArray;
 
@@ -200,7 +200,7 @@ public class faccade_main {
                 sessionInfor.Session = cap_FirstLetter(result.getString("session_name"));//result.getString("session_name");
                 sessionInfor.SessionID = result.getInt("session_id");
                 sessionInfor.SpeakID = result.getInt("speaker_id");
-                sessionInfor.TimeID = result.getInt("room_id");
+                sessionInfor.RoomID = result.getInt("room_id");
                 sessionInfor.TimeID = result.getInt("time_slot_id");
 
                 //System.out.print(result.getString("session_name") + " | ");
@@ -740,5 +740,17 @@ public class faccade_main {
             _name += name[i] + (i == name.length - 1 ? "" : " ");
         }
         return _name;
+    }
+    
+    public boolean is_Number(String number){
+        try{
+            int num = Integer.parseInt(number);
+            if (num >= 1 && num <= 120){
+                return true;
+            }
+        }catch(NumberFormatException ex){
+            System.out.println(ex);
+        }
+        return false;
     }
 }

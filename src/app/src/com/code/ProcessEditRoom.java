@@ -41,7 +41,7 @@ public class ProcessEditRoom extends HttpServlet {
         String roomSeat = request.getParameter("Seat");
         String roomNum = request.getParameter("roomNum");
 
-        check = isNumeric(roomSeat);
+        check = fb.is_Number(roomSeat);
         
         if (check == true) {
             if (fb.edit_room(roomNum, roomSeat, roomID)) {
@@ -57,14 +57,6 @@ public class ProcessEditRoom extends HttpServlet {
         }
 
     }
-
-    public static boolean isNumeric(String str) { 
-        try {  
-          return (Double.parseDouble(str) > 0 && Double.parseDouble(str) < 121);
-        } catch(NumberFormatException e){  
-          return false;  
-        }  
-      }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
