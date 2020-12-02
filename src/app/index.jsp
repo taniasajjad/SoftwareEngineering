@@ -1,5 +1,5 @@
 <%@ page import="com.code.*" %>
-<%@ page import="org.json.*"%>
+<%@ page import="org.json.JSONArray"%>
 
 <!DOCTYPE html>
 

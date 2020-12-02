@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-import com.code.faccade_main;
+package com.code;
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -18,10 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HaoPhan
  */
-@WebServlet(urlPatterns = {"/processEditRoom"})
-public class ProcessEditRoom extends HttpServlet {
+@WebServlet("/addingSession")
+public class AddingSession extends HttpServlet {
 
     private final faccade_main fb = new faccade_main();
+    String error = "0";
     boolean check = true;
 
     /**
@@ -35,26 +38,42 @@ public class ProcessEditRoom extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String roomID = request.getParameter("id");
-        String roomSeat = request.getParameter("Seat");
-        String roomNum = request.getParameter("roomNum");
+        //PrintWriter out = response.getWriter();
 
-        check = fb.is_Number(roomSeat);
-        
-        if (check == true) {
-            if (fb.edit_room(roomNum, roomSeat, roomID)) {
-                response.sendRedirect("index.jsp");
+        String ssName = request.getParameter("SessionName");
+        String roomNum = request.getParameter("roomNumber");
+        String roomSeat = request.getParameter("roomSeat");
+        String timeS = request.getParameter("timeStart");
+        String timeE = request.getParameter("timeEnd");
+        error = fb.check_time(timeS, timeE);
+        while (true) {
+            if ((roomSeat.matches("^[0-9]*$") && roomSeat.length() > 0) == false) {
+                request.setAttribute("errorMessage", "Please check Seat input. Number Only!");
+                check = false;
+                break;
             }
-        } else {
-            request.setAttribute("id", roomID);
-            request.setAttribute("SeatValue", roomSeat);
-            request.setAttribute("RoomValue", roomNum);
-            request.setAttribute("errorMessage", "Room Seat only numbers, from 1 to 120");
-            RequestDispatcher rq = request.getRequestDispatcher("/edit_Room.jsp");
-            rq.include(request, response);
+            if (error.equals("0") == false) {
+                request.setAttribute("errorMessage", error);
+                check = false;
+                break;
+            }
+            check = true;
+            break;
         }
-
+        request.setAttribute("SessionNameValue", ssName);
+        request.setAttribute("roomNumberValue", roomNum);
+        request.setAttribute("roomSeatValue", roomSeat);
+        request.setAttribute("timeStartValue", timeS);
+        request.setAttribute("timeEndValue", timeE);
+        if (check == false) {
+            RequestDispatcher rq = request.getRequestDispatcher("/Session.jsp");
+            rq.include(request, response);
+        } else if (check == true) {
+            RequestDispatcher rqb = request.getRequestDispatcher("/Speaker.jsp");
+            rqb.include(request, response);
+            //response.sendRedirect("Speaker.jsp");
+        }
+        //out.print(ssName + " " + roomNum + " " + roomSeat + " " + timeS + " " + timeE);
     }
 
     /**
@@ -74,10 +93,10 @@ public class ProcessEditRoom extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProcessEditRoom</title>");
+            out.println("<title>Servlet AddingSession</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProcessEditRoom at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddingSession at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-import com.code.faccade_main;
+package com.code;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -18,12 +19,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HaoPhan
  */
-@WebServlet(urlPatterns = {"/processEditSpeaker"})
-public class ProcessEditSpeaker extends HttpServlet {
+@WebServlet(urlPatterns = {"/processEditRoom"})
+public class ProcessEditRoom extends HttpServlet {
 
-    boolean check = true;
     private final faccade_main fb = new faccade_main();
-    String name = "",doc = "",phone = "",email = "",spkID = "";
+    boolean check = true;
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -36,68 +36,35 @@ public class ProcessEditSpeaker extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getParameter(request);
-        while (true) {
-            if (fb.check_name(name) == false) {
-                request.setAttribute("errorMessage", "Invalid name, name only containts Letter or too Short");
-                check = false;
-                break;
-            }
-            if (fb.check_phone(phone) == false) {
-                request.setAttribute("errorMessage", "We only allow US phone Number or 10 digits." + phone);
-                check = false;
-                break;
-            }
-            if (fb.checkDup_speaker("phone", phone, spkID) == false) {
-                request.setAttribute("errorMessage", "This phone number is already in use");
-                check = false;
-                break;
-            }
-            if (fb.check_email(email) == false) {
-                request.setAttribute("errorMessage", "Invalid email, please check it again!");
-                check = false;
-                break;
-            }
-            if (fb.checkDup_speaker("email", email, spkID) == false) {
-                request.setAttribute("errorMessage", "Email already used, Please use different one");
-                check = false;
-                break;
-            }
-            check = true;
-            break;
-        }
+        PrintWriter out = response.getWriter();
+        String roomID = request.getParameter("id");
+        String roomSeat = request.getParameter("Seat");
+        String roomNum = request.getParameter("roomNum");
 
+        check = isNumeric(roomSeat);
+        
         if (check == true) {
-            if (fb.edit_speaker(name, phone, email, doc, spkID) == true) {
+            if (fb.edit_room(roomNum, roomSeat, roomID)) {
                 response.sendRedirect("index.jsp");
-            } else {
-                setAttribute(request);
-                request.setAttribute("errorMessage", "Cannot connect to database");
-                RequestDispatcher rq = request.getRequestDispatcher("/edit_Speaker.jsp");
-                rq.include(request, response);
             }
         } else {
-            setAttribute(request);
-            RequestDispatcher rq = request.getRequestDispatcher("/edit_Speaker.jsp");
+            request.setAttribute("id", roomID);
+            request.setAttribute("SeatValue", roomSeat);
+            request.setAttribute("RoomValue", roomNum);
+            request.setAttribute("errorMessage", "Room Seat only numbers, from 1 to 120");
+            RequestDispatcher rq = request.getRequestDispatcher("/edit_Room.jsp");
             rq.include(request, response);
         }
+
     }
 
-    public void setAttribute(HttpServletRequest request) {
-        request.setAttribute("NameValue", name);
-        request.setAttribute("PhoneNumberValue", phone);
-        request.setAttribute("EmailValue", email);
-        request.setAttribute("docValue", doc);
-        request.setAttribute("idValue", spkID);
-    }
-
-    public void getParameter(HttpServletRequest request) {
-        name = request.getParameter("Name");
-        doc = request.getParameter("doc");
-        phone = request.getParameter("PhoneNumber");
-        email = request.getParameter("Email");
-        spkID = request.getParameter("id");
-    }
+    public static boolean isNumeric(String str) { 
+        try {  
+          return (Double.parseDouble(str) > 0 && Double.parseDouble(str) < 121);
+        } catch(NumberFormatException e){  
+          return false;  
+        }  
+      }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -116,10 +83,10 @@ public class ProcessEditSpeaker extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProcessEditSpeaker</title>");
+            out.println("<title>Servlet ProcessEditRoom</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProcessEditSpeaker at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProcessEditRoom at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -149,4 +116,5 @@ public class ProcessEditSpeaker extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

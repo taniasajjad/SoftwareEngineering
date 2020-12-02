@@ -48,7 +48,8 @@ public class Speaker {
     }
 
     public String getPhone() {
-        faccade_main fb = new faccade_main(); // ??
+        faccade_main fb = new faccade_main();
+        //return fb.format_phone(phone);
         return phone;
     }
 

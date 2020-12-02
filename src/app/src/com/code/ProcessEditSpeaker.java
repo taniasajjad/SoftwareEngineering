@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.code;
 
-import com.code.faccade_main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -18,10 +18,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HaoPhan
  */
-@WebServlet(urlPatterns = {"/processEditSession"})
-public class ProcessEditSession extends HttpServlet {
+@WebServlet(urlPatterns = {"/processEditSpeaker"})
+public class ProcessEditSpeaker extends HttpServlet {
 
+    boolean check = true;
     private final faccade_main fb = new faccade_main();
+    String name = "",doc = "",phone = "",email = "",spkID = "";
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -34,20 +36,67 @@ public class ProcessEditSession extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String ssName = request.getParameter("SessionName");
-        String ssID = request.getParameter("id");
+        getParameter(request);
+        while (true) {
+            if (fb.check_name(name) == false) {
+                request.setAttribute("errorMessage", "Invalid name, name only containts Letter or too Short");
+                check = false;
+                break;
+            }
+            if (fb.check_phone(phone) == false) {
+                request.setAttribute("errorMessage", "We only allow US phone Number or 10 digits." + phone);
+                check = false;
+                break;
+            }
+            if (fb.checkDup_speaker("phone", phone, spkID) == false) {
+                request.setAttribute("errorMessage", "This phone number is already in use");
+                check = false;
+                break;
+            }
+            if (fb.check_email(email) == false) {
+                request.setAttribute("errorMessage", "Invalid email, please check it again!");
+                check = false;
+                break;
+            }
+            if (fb.checkDup_speaker("email", email, spkID) == false) {
+                request.setAttribute("errorMessage", "Email already used, Please use different one");
+                check = false;
+                break;
+            }
+            check = true;
+            break;
+        }
 
-        boolean check = fb.edit_session(ssName, ssID);
         if (check == true) {
-            //request.setAttribute("goodMessage", "changedsusscess");
-            response.sendRedirect("index.jsp");
+            if (fb.edit_speaker(name, phone, email, doc, spkID) == true) {
+                response.sendRedirect("index.jsp");
+            } else {
+                setAttribute(request);
+                request.setAttribute("errorMessage", "Cannot connect to database");
+                RequestDispatcher rq = request.getRequestDispatcher("/edit_Speaker.jsp");
+                rq.include(request, response);
+            }
         } else {
-            request.setAttribute("errorMessage", "Some input not correct, please check again");
-            RequestDispatcher rq = request.getRequestDispatcher("/edit_Session.jsp");
+            setAttribute(request);
+            RequestDispatcher rq = request.getRequestDispatcher("/edit_Speaker.jsp");
             rq.include(request, response);
         }
-        
+    }
+
+    public void setAttribute(HttpServletRequest request) {
+        request.setAttribute("NameValue", name);
+        request.setAttribute("PhoneNumberValue", phone);
+        request.setAttribute("EmailValue", email);
+        request.setAttribute("docValue", doc);
+        request.setAttribute("idValue", spkID);
+    }
+
+    public void getParameter(HttpServletRequest request) {
+        name = request.getParameter("Name");
+        doc = request.getParameter("doc");
+        phone = request.getParameter("PhoneNumber");
+        email = request.getParameter("Email");
+        spkID = request.getParameter("id");
     }
 
     /**
@@ -67,10 +116,10 @@ public class ProcessEditSession extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProcessEditSession</title>");
+            out.println("<title>Servlet ProcessEditSpeaker</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProcessEditSession at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProcessEditSpeaker at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -100,5 +149,4 @@ public class ProcessEditSession extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
