@@ -1,0 +1,3 @@
+db/data/*
+src/app/WEB-INF/classes/com/code/*
+src/app/WEB-INF/classes/object/*
