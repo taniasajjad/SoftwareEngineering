@@ -43,7 +43,7 @@
             </div>
             <div class="Speakerinput">
                 <img src="icon/userID.png">
-                <input type="date" id="doc" name="doc" value="<%=(request.getAttribute("docValue") != null) ? request.getAttribute("docValue") : ""%>" placeholder="Day Of Contact">
+                <input type="text" id="doc" name="doc" value="<%=(request.getAttribute("docValue") != null) ? request.getAttribute("docValue") : ""%>" placeholder="Day Of Contact">
 
             </div>
             <div class="Speakerinput">
@@ -62,7 +62,6 @@
     </div>
     <script>
 
-       // var data = document.getElementById("SpeakerID").value;
         var array = ${SpeakerID}
         document.getElementById("Name").value = array[0].name;
         document.getElementById("doc").value = array[0].doc;
