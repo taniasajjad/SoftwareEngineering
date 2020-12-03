@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author HaoPhan
- */
 @WebServlet(urlPatterns = {"/addingSessionSPK"})
 public class AddingSpeaker extends HttpServlet {
 
@@ -117,17 +113,6 @@ public class AddingSpeaker extends HttpServlet {
         phone = request.getParameter("PhoneNumber");
         email = request.getParameter("Email");
 
-        //Get value from these information in session, 
-        /*String ssName = request.getParameter("SessionName");
-        String roomNum = request.getParameter("roomNumber");
-        String roomSeat = request.getParameter("roomSeat");
-        String timeS = request.getParameter("timeStart");
-        String timeE = request.getParameter("timeEnd");
-        //Get value from speaker
-        String name = request.getParameter("Name");
-        String doc = request.getParameter("doc");
-        String phone = request.getParameter("PhoneNumber");
-        String email = request.getParameter("Email");*/
     }
 
     /**
@@ -143,7 +128,6 @@ public class AddingSpeaker extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

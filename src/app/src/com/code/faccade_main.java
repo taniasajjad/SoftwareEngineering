@@ -21,6 +21,10 @@ public class faccade_main {
     private JSONArray json;
     private ResultSet result;
 
+    private final String DB_DRIVER = "com.mysql.jdbc.Driver";
+    private final String EMAIL_KEY = "email";
+    private final String SPEAKER_ID = "speaker_id";
+
     //Method check if phone email, from speaker already exist in database
     //exID(edit)check another phone & email from another id not current
     public boolean checkDup_speaker(String key, String value, String exceptID) {
@@ -31,15 +35,15 @@ public class faccade_main {
         } else {
             exID = true;
         }
-        if (key == "email") {
-            idDatabase = "email";
-        } else if (key == "phone") {
+        if (key.equals(EMAIL_KEY)) {
+            idDatabase = EMAIL_KEY;
+        } else if (key.equals("phone")) {
             idDatabase = "phone_number";
             value = trim_phone(value);
         }
         String query = "SELECT * FROM speaker where " + idDatabase + " ='" + value + "'";
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
             while (result.next()) {
                 if (!exID) {
@@ -48,7 +52,7 @@ public class faccade_main {
                         return false;
                     }
                 } else {
-                    if (!(result.getString("speaker_id").equals(exceptID))) {
+                    if (!(result.getString(SPEAKER_ID).equals(exceptID))) {
                         database.closeConnection();
                         return false;
                     }
@@ -98,7 +102,7 @@ public class faccade_main {
         //ResultSet result2;
         boolean check = false;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             int i = database.preStatement(query);
             if (i > 0) {
                 return true;
@@ -116,15 +120,15 @@ public class faccade_main {
         ArrayList<Speaker> speaker = new ArrayList<>();
         json = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
             Speaker spk = new Speaker();
             if (result.next()) {
-                spk.name = cap_FirstLetter(result.getString("name"));//result.getString("name");
+                spk.name = cap_FirstLetter(result.getString("name"));
                 spk.doc = result.getString("day_of_contact");
                 spk.phone = format_phone(result.getString("phone_number"));
-                spk.email = result.getString("email");
-                spk.spkID = result.getString("speaker_id");
+                spk.email = result.getString(EMAIL_KEY);
+                spk.spkID = result.getString(SPEAKER_ID);
             }
             speaker.add(spk);
             database.closeConnection();
@@ -155,11 +159,9 @@ public class faccade_main {
             String query = "SELECT * FROM speaker where phone_number ='" + phone + "' and email ='" + email + "' and name ='" + name + "' and day_of_contact ='" + doc + "'";
             result = database.getConnectionStatement(query);
             if (result.next()) {
-                id = result.getInt("speaker_id");
-                //return id;
+                id = result.getInt(SPEAKER_ID);
             }
             database.closeConnection();
-            //return 0;
         } catch (Exception ex) {
             Logger.getLogger(faccade_main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -192,24 +194,22 @@ public class faccade_main {
         String sa = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
 
             while (result.next()) {
                 SessionInfor sessionInfor = new SessionInfor();
-                sessionInfor.Session = cap_FirstLetter(result.getString("session_name"));//result.getString("session_name");
+                sessionInfor.Session = cap_FirstLetter(result.getString("session_name"));
                 sessionInfor.SessionID = result.getInt("session_id");
-                sessionInfor.SpeakID = result.getInt("speaker_id");
+                sessionInfor.SpeakID = result.getInt(SPEAKER_ID);
                 sessionInfor.RoomID = result.getInt("room_id");
                 sessionInfor.TimeID = result.getInt("time_slot_id");
 
-                //System.out.print(result.getString("session_name") + " | ");
-                String querySPK = "SELECT * FROM speaker where speaker_id='" + result.getInt("speaker_id") + "'";
+                String querySPK = "SELECT * FROM speaker where speaker_id='" + result.getInt(SPEAKER_ID) + "'";
                 result2 = database.getConnectionStatement(querySPK);
                 while (result2.next()) {
                     sessionInfor.Name = cap_FirstLetter(result2.getString("name"));
-                    sessionInfor.Email = result2.getString("email");
-                    // System.out.print("Name: " + result2.getString("name") + "| Email: " + result2.getString("email"));
+                    sessionInfor.Email = result2.getString(EMAIL_KEY);
                 }
                 database.closeConnection();
 
@@ -219,7 +219,6 @@ public class faccade_main {
                     sessionInfor.RoomName = result2.getString("room_number");
                     sessionInfor.Seat = result2.getInt("seats");
                     sessionInfor.RoomID = result2.getInt("room_id");
-                    //System.out.print("| Room Num: " + result2.getString("room_number") + "| Seat: " + result2.getInt("seats"));
                 }
                 database.closeConnection();
 
@@ -232,12 +231,9 @@ public class faccade_main {
                     Ts = Ts.substring(0, Math.min(Ts.length(), 5));
                     Te = Te.substring(0, Math.min(Te.length(), 5));
 
-                    sessionInfor.Time = Ts + " - " + Te + getDuration(Ts, Te);
-                    //System.out.print("| Time: " + result2.getTime("time_start") + " - " + result2.getTime("time_end"));
-                }
+                    sessionInfor.Time = Ts + " - " + Te + getDuration(Ts, Te);                }
                 database.closeConnection();
 
-                //System.out.println();
                 sessionInforArr.add(sessionInfor);
             }
             json = new JSONArray(sessionInforArr);
@@ -260,7 +256,7 @@ public class faccade_main {
         ArrayList<Room> room = new ArrayList<>();
         json = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
             Room rm = new Room();
             if (result.next()) {
@@ -315,7 +311,7 @@ public class faccade_main {
 
         boolean check = false;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             int i = database.preStatement(query);
             if (i > 0) {
                 return true;
@@ -323,7 +319,7 @@ public class faccade_main {
                 return false;
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            Logger.getLogger(faccade_main.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -405,7 +401,7 @@ public class faccade_main {
 
         boolean check = false;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             int i = database.preStatement(query);
             if (i > 0) {
                 return true;
@@ -463,7 +459,7 @@ public class faccade_main {
         ArrayList<TimeSlot> timeSlot = new ArrayList<>();
         json = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
             TimeSlot timeS = new TimeSlot();
             if (result.next()) {
@@ -484,12 +480,12 @@ public class faccade_main {
         ArrayList<Session> session = new ArrayList<>();
         json = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             result = database.getConnectionStatement(query);
             Session ss = new Session();
             if (result.next()) {
                 ss.sessID = result.getString("session_id");
-                ss.sessName = cap_FirstLetter(result.getString("session_name"));//result.getString("session_name");
+                ss.sessName = cap_FirstLetter(result.getString("session_name"));
             }
             session.add(ss);
             database.closeConnection();
@@ -536,7 +532,7 @@ public class faccade_main {
 
         boolean check = false;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DB_DRIVER);
             int i = database.preStatement(query);
             if (i > 0) {
                 return true;
@@ -691,7 +687,6 @@ public class faccade_main {
                     //If session more than 2 hours, then Break Loop
                     error = errorMaxTimeSession + (he - 2) + " hours";
                     break;
-                    //out.print("\nSorry, we only allow a session with maximum 2 hours. You exceed " + (he - 2) + " hours");
                 }
             }
             break;

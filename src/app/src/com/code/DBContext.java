@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class DBContext {
 
@@ -27,7 +26,6 @@ public class DBContext {
     }
 
     public void getconnection() throws Exception {
-        //String url = "jdbc:mysql://" + severName + ":" + portNumber + "/" + dbName;
         connection = DriverManager.getConnection(url, userID, password);
     }
 

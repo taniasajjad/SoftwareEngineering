@@ -5,10 +5,6 @@
  */
 package object;
 
-/**
- *
- * @author HaoPhan
- */
 public class Session {
 
     public String sessID;

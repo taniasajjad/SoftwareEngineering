@@ -33,7 +33,6 @@
         <h1>Speaker</h1>
         <form action="processEditSpeaker" method="post">
             <!--from backend, will send arrayjson type to SpeakerID, then js front-end, will get these data, and set to input-->
-            <!--input type="hidden" name="SpeakerID" id="SpeakerID" value=${SpeakerID}-->
 
             <div style="color:red">${errorMessage}</div>
 

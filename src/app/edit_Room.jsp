@@ -33,7 +33,6 @@
         <h1>Room</h1>
         <form action="processEditRoom" method="post">
             <!--from backend, will send arrayjson type to SpeakerID, then js front-end, will get these data, and set to input-->
-            <!--input type="hidden" name="RoomID" id="RoomID" value=${RoomID}-->
 
             <div style="color:red">${errorMessage}</div>
 
@@ -55,7 +54,6 @@
     </div>
     <script>
 
-        //var data = document.getElementById("RoomID").value;
         var array = ${RoomID};
         document.getElementById("roomNum").value = array[0].roomNum;
         document.getElementById("Seat").value = array[0].roomSeat;

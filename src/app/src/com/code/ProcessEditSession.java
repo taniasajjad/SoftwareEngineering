@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author HaoPhan
- */
 @WebServlet(urlPatterns = {"/processEditSession"})
 public class ProcessEditSession extends HttpServlet {
 
@@ -41,7 +37,6 @@ public class ProcessEditSession extends HttpServlet {
 
         boolean check = fb.edit_session(ssName, ssID);
         if (check == true) {
-            //request.setAttribute("goodMessage", "changedsusscess");
             response.sendRedirect("index.jsp");
         } else {
             request.setAttribute("errorMessage", "Some input not correct, please check again");
@@ -64,7 +59,6 @@ public class ProcessEditSession extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author HaoPhan
- */
 @WebServlet(urlPatterns = {"/addingSession"})
 public class AddingSession extends HttpServlet {
 
@@ -37,7 +33,6 @@ public class AddingSession extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //PrintWriter out = response.getWriter();
 
         String ssName = request.getParameter("SessionName");
         String roomNum = request.getParameter("roomNumber");
@@ -70,9 +65,7 @@ public class AddingSession extends HttpServlet {
         } else if (check == true) {
             RequestDispatcher rqb = request.getRequestDispatcher("/Speaker.jsp");
             rqb.include(request, response);
-            //response.sendRedirect("Speaker.jsp");
         }
-        //out.print(ssName + " " + roomNum + " " + roomSeat + " " + timeS + " " + timeE);
     }
 
     /**

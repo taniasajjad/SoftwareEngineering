@@ -55,11 +55,5 @@
                 <button id="Next">Done</button>
             </form>
         </div>
-        <script >
-
-            /*  document.getElementById("Next").onclick = function () {
-             location.href = "Session.jsp";
-             };*/
-        </script>
     </body>
 </html>

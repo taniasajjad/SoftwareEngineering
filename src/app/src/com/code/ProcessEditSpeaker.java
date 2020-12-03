@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author HaoPhan
- */
 @WebServlet(urlPatterns = {"/processEditSpeaker"})
 public class ProcessEditSpeaker extends HttpServlet {
 

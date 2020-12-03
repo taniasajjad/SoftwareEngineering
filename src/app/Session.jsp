@@ -74,41 +74,6 @@
             <span>Black Team<br>Copyright &copy; 2019-2020 </span>
         </footer>
     -->
-    <script>
-
-
-
-        /*
-        document.getElementById("submitBtn1").onclick = function () {
-
-            var name = document.getElementById("FullName").value;
-            var roomnumber = document.getElementById("RoomNumber").value;
-            var session = document.getElementById("SessionName").value;
-            var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
-
-            if (regName.test(name) || name == "") {
-                alert('Valid name given.');
-
-            } else if (regName.test(roomnumber) || roomnumber == "") {
-                alert('Valid Room Name given.');
-            } else if (regName.test(session) || session == "") {
-                alert('Valid Session given.');
-            }
-            else {
-                var obj = { Name: name, Session: session, RoomNumber: roomnumber, Seats: 70 }
-                localStorage.setItem("Adding", JSON.stringify(obj));
-                location.href = "Speaker.jsp";
-            }
-
-            */
-
-
-        };
-
-
-
-
-    </script>
 </body>
 
 </html>
