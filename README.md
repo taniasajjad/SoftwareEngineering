@@ -2,7 +2,7 @@
 
 ## COMP-4960 Final Project
 
-A web app manage session scheduling for the Boston Code Camp conference
+A web app to manage session scheduling for the Boston Code Camp conference
 
 ![screenshot](https://github.com/taniasajjad/SoftwareEngineering/blob/master/.github/session-list-screenshot.png)
 
@@ -35,7 +35,9 @@ A web app manage session scheduling for the Boston Code Camp conference
      - ex: `jdbc:mysql://127.0.0.1:3306/db`
      - `jdbc:mysql://<address>:<port>/<database_name>`
    - `MYSQL_USER` - User with access to required data
+     - ex: `root`
    - `MYSQL_PASSWORD` - Password of user
+     - ex: `password123`
 1. Build Java classes. See `Dev` section bellow.
 1. Import database files into your MySQL database.
 1. Import the web app into Tomcat

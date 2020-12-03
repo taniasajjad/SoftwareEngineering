@@ -106,7 +106,7 @@
                     <label>Speaker:</label> 
                     <input type = "text" id = "SpeakerName" size = "100" value = "C" readonly>
 
-                    <label>Gmail:</label>
+                    <label>Email:</label>
                     <input type = "text" id = "SpeakerEmail" value = "CSDCSD@Gmail.com "  readonly>  <br>
 
                     <label>RoomName:</label> 
