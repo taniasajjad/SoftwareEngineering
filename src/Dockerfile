@@ -1,4 +1,3 @@
-# FROM tomcat:jdk8-openjdk
 FROM tomcat:9.0.39-jdk8-openjdk
 COPY app/ /usr/local/tomcat/webapps/app
 RUN javac \

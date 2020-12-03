@@ -15,10 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author HaoPhan
- */
 @WebServlet(urlPatterns = {"/editInformation"})
 public class EditInformation extends HttpServlet {
 
@@ -62,16 +58,10 @@ public class EditInformation extends HttpServlet {
             boolean check = false;
             
             while (true) {
-                if (!fb.remove_session(sessionID)) {
-                    check = false;
-                    break;
-                } else if (!fb.remove_room(roomID)) {
-                    check = false;
-                    break;
-                } else if (!fb.remove_speaker(speakID)) {
-                    check = false;
-                    break;
-                } else if (!fb.remove_time_slot(timeID)) {
+                if (!fb.remove_session(sessionID) 
+                || !fb.remove_room(roomID) 
+                || !fb.remove_speaker(speakID) 
+                || !fb.remove_time_slot(timeID)) {
                     check = false;
                     break;
                 }
@@ -81,7 +71,7 @@ public class EditInformation extends HttpServlet {
 
             if (check) {
                 response.sendRedirect("index.jsp");
-            } else //out.print("cannot connect to database");
+            } else
             {
                 out.print("cannot connect to database");
             }

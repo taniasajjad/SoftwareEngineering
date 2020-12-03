@@ -31,7 +31,6 @@
         <h1>Session</h1>
         <form action="processEditSession" method="post">
             <!--from backend, will send arrayjson type to SpeakerID, then js front-end, will get these data, and set to input-->
-            <!--input type="text" name="SessionID" id="SessionID" value=${SessionID}-->
             <div style="color:red">${errorMessage}</div>
 
             <div class="Sessioninput">

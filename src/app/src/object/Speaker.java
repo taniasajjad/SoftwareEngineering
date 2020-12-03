@@ -7,10 +7,6 @@ package object;
 
 import com.code.faccade_main;
 
-/**
- *
- * @author HaoPhan
- */
 public class Speaker {
     
     public String name;
@@ -48,8 +44,6 @@ public class Speaker {
     }
 
     public String getPhone() {
-        faccade_main fb = new faccade_main();
-        //return fb.format_phone(phone);
         return phone;
     }
 

@@ -5,10 +5,6 @@
  */
 package object;
 
-/**
- *
- * @author HaoPhan
- */
 public class Room {
     public String roomNum;
     public String roomID;
