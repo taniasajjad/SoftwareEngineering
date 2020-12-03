@@ -1,7 +1,7 @@
 version: '3'
 services:
   database:
-    image: mysql:latest
+    image: mysql:8.0.22
     container_name: sql_database
     volumes:
       - ./db/db-setup:/docker-entrypoint-initdb.d/:ro
@@ -25,4 +25,4 @@ services:
       MYSQL_DATABASE: db
       MYSQL_USER: user
       MYSQL_PASSWORD: password123
-      MYSQL_ROOT_PASSWORD: rootPassword123
+      MYSQL_URL: jdbc:mysql://database:3306/db

@@ -1,5 +1,7 @@
 <%@ page import="com.code.*" %>
-<%@ page import="org.json.*"%>
+<%@ page import="org.json.JSONArray"%>
+<% faccade_main fb = new faccade_main();%>
+
 
 <!DOCTYPE html>
 
@@ -87,8 +89,8 @@
         <script>
 
             // Read from db then add to array like this
-            faccade_main fb = new faccade_main();
-            var array = fb.getSession();
+
+            var array = <%=fb.getSession()%>;
             for (var i = 0; i < array.length; i++) {
             var myDiv = document.createElement("div");
             //Set its unique ID.
